@@ -1,12 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>To do list</title>
-    <link rel = "stylesheet" href="styles/styles.css">
-</head>
-<body>
-
+<%- include("header") -%>
     <div class="box">
 
         <h1 id="heading"> <%= listtitle %> </h1>
@@ -26,9 +18,4 @@
             <button type="submit" name="list" value = <%= %> >+</button>
         </form>
     </div>
-
-
-</body>
-
-
-</html>
+    <%- include("footer") -%>
