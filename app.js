@@ -7,10 +7,13 @@ app.set("view engine" , 'ejs');
 
 app.use(bodyParser.urlencoded({extended:true}));
 
-var items = [];
+app.use(express.static("public"));
+
+var items = ["Eat" , "code" , "no sleep"];
+
+workItems = [];
 
 app.get("/" , function(req, res){
-    
     var today = new Date();
     var options = {
         weekday: 'long',
@@ -19,7 +22,7 @@ app.get("/" , function(req, res){
     };
 
     var day = today.toLocaleDateString("en-US" , options);
-    res.render("list" , { kindofday : day , newlistitems: items }); // key value 
+    res.render("list" , { listtitle : day , newlistitems: items }); // key value 
 });
 // need to have a views folder
 
@@ -29,8 +32,23 @@ app.listen(3000, function(){
 
 app.post("/" , function(req , res){
     var item = req.body.newitem;
-    items.push(item);
-    console.log(item);
+    if(req.body.list = "work"){
+        workItems.push(item);
+        res.redirect("/work") // if not keep on rotating
+        }else{
+        items.push(item);
+        console.log(item);
+        res.redirect("/");
+    }
 
-    res.redirect("/");
+});
+
+app.get("/work", function(req,res){
+    res.render("list" , {listtitle : "work List" , newlistitems: workItems  })
+});  
+
+app.post("/work" , function(req,res){
+    let item = req.body.newitem;
+    workItems.push(item);
+    res.redirect("/work");
 })
